@@ -4,8 +4,8 @@ import { SimpleText } from "./components/SimpleText";
 function App() {
   const x = { isDeveloper: true };
   const skills = [
-    { id: 1, title: "Html" },
-    { id: 2, title: "css" },
+    { id: 1, title: "HTML" },
+    { id: 2, title: "CSS" },
     { id: 3, title: "React" },
     { id: 4, title: "Vue" },
   ];
