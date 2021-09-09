@@ -5,7 +5,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: darkslategrey;
+  background-image: linear-gradient(
+    to left bottom,
+    #1c3866,
+    #1c3067,
+    #232667,
+    #2d1a64,
+    #38055e
+  );
 }
 
 code {
@@ -22,4 +29,39 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.App {
+  text-align: center;
+  font-family: "Segoe UI";
+  font-size: 1.5em;
+  color: rgb(189, 195, 201);
+}
+.btn {
+  padding: 10px 10px;
+  border-radius: 20px;
+  background-color: rgb(106, 205, 214);
+  font-size: large;
+}
+.input {
+  padding: 10px 10px;
+}
+.message {
+  margin: 20px;
+}
+.header {
+  font-family: "Niconne", cursive;
+  font-size: 90px;
+}
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+.chatList {
+  background-color: rgb(189, 195, 201);
+  border-radius: 20px;
+  color: #232667;
+  padding-bottom: 50px;
+}
+.form {
+  margin-top: 50px;
 }
