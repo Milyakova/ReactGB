@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Message } from "./components/Message";
+import { TextField } from "@material-ui/core";
+import { List } from "@material-ui/core";
+import { ListItem } from "@material-ui/core";
+import ListItemText from "@material-ui/core/ListItemText";
+import image from "./img/crystal-ball.png";
 
 const messageList = [
   { text: "Я помню чудное мгновение передо мной явилась ты", author: "Пушкин" },
@@ -35,12 +40,20 @@ const answersList = [
   },
 ];
 
+const chatList = [
+  { id: Date.now(), name: "Вячеслав" },
+  { id: Date.now(), name: "Александр Сергевич" },
+  { id: Date.now(), name: "Ольга" },
+  { id: Date.now(), name: "Анна" },
+];
+
 function App() {
   const [messages, setMessages] = useState([]);
   const [value, setValue] = useState("");
+  const inputRef = useRef();
 
   useEffect(() => {
-    if (messages[messages.length - 1]?.author === "Вы: ") {
+    if (messages[messages.length - 1]?.author === "Вы") {
       setTimeout(() => {
         const randomNum = Math.floor(Math.random() * answersList.length);
         setMessages((prevMessages) => [
@@ -48,6 +61,7 @@ function App() {
           answersList[randomNum],
         ]);
       }, 2000);
+      inputRef.current.focus();
     }
   }, [messages]);
 
@@ -56,6 +70,8 @@ function App() {
       const addingMessage = messageList.shift();
       setMessages((prevMessages) => [...prevMessages, addingMessage]);
     }
+    setValue("");
+    inputRef.current.focus();
   };
 
   const handleChange = (event) => {
@@ -66,23 +82,45 @@ function App() {
     event.preventDefault();
     setMessages((prevMessages) => [
       ...prevMessages,
-      { text: value, author: "Вы: " },
+      { text: value, author: "Вы" },
     ]);
   };
 
   return (
     <div className="App">
-      <h1>Спиритический сеанс</h1>
-      {messages.map((message, i) => (
-        <Message key={i} content={message} />
-      ))}
-      <button onClick={handleAddMessage} className="btn">
-        Вызвать дух
-      </button>
-      <form onSubmit={handleSubmit}>
-        <input value={value} onChange={handleChange} className="input"></input>
-        <input type="submit" value="Задать вопрос" className="btn"></input>
-      </form>
+      <h1 className="header">Spiritistic séance</h1>
+      <div className="container">
+        <div>
+          <List className="chatList">
+            {chatList.map((chat, index) => (
+              <ListItem key={index} chat={chat}>
+                {chat.name}
+              </ListItem>
+            ))}
+          </List>
+        </div>
+        <div>
+          {messages.map((message, i) => (
+            <Message key={i} content={message} />
+          ))}
+          <button onClick={handleAddMessage} className="btn">
+            Вызвать дух
+          </button>
+          <form onSubmit={handleSubmit} className="form">
+            <TextField
+              value={value}
+              onChange={handleChange}
+              id="outlined-basic"
+              label="Ваш вопрос"
+              variant="outlined"
+              inputRef={inputRef}
+            />
+            {/* <input value={value} onChange={handleChange} className="input"></input> */}
+            <input type="submit" value="Задать вопрос" className="btn"></input>
+          </form>
+        </div>
+      </div>
+      <img alt="pic" src={image} />
     </div>
   );
 }
